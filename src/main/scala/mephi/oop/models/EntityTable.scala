@@ -3,7 +3,7 @@ package mephi.oop.models
 import mephi.oop.IEntityTable
 import scala.collection.mutable
 
-class Table[T] extends IEntityTable[T] {
+class EntityTable[T] extends IEntityTable[T] {
 
   val storage: mutable.HashMap[Int, T] = new mutable.HashMap[Int, T]
 

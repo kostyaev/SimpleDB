@@ -5,7 +5,7 @@ package mephi.oop
  *
  * @tparam T Тип связей, хранящихся в таблице
  */
-trait ILinkTable[T] extends ILink {
+trait ILinkTable[T <: ILink] {
 
 /**
  * Добавление связи
