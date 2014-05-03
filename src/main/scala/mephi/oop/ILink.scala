@@ -6,8 +6,8 @@ package mephi.oop
 
 trait ILink {
 
-  def getSourceId()
+  def getSourceId(): Int
 
-  def getTargetId()
+  def getTargetId(): Int
 
 }
