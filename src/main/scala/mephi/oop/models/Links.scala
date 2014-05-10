@@ -4,15 +4,15 @@ import mephi.oop.ILink
 
 case class DoctorPatients(source: Int, target: Int) extends ILink{
 
-  def getTargetId(): Int = ???
+  def getTargetId(): Int = target
 
-  def getSourceId(): Int = ???
+  def getSourceId(): Int = source
 }
 
 case class WardPatients(source: Int, target: Int) extends ILink{
 
-  def getTargetId(): Int = ???
+  def getTargetId(): Int = target
 
-  def getSourceId(): Int = ???
+  def getSourceId(): Int = source
 }
 

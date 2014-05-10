@@ -17,7 +17,7 @@ trait ILinkTable[T <: ILink] {
    * @return Объект связи
    */
   def getLink(sourceId: Int, targetId: Int): Option[T] = storage.get(sourceId) match {
-    case Some(parent: mutable.HashMap) => parent.get(targetId)
+    case Some(parent: mutable.HashMap[Int, T]) => parent.get(targetId)
     case _ => None
   }
 
@@ -30,9 +30,8 @@ trait ILinkTable[T <: ILink] {
    * @return Идентификатор источника
    */
   def getSourceId(targetId: Int): Int = {
-    val result: List[Int] = for(parent <- storage; child: ILink <- parent if child.getTargetId == targetId)
-    yield child.getSourceId()
-    result.head
+    val result = storage.values.dropWhile(hashmap => !hashmap.values.exists(x => x.getTargetId() == targetId))
+    result.head.head._1
   }
 
   /**
@@ -42,7 +41,7 @@ trait ILinkTable[T <: ILink] {
    * @return Список идентификаторов
    */
   def getTargetIds(sourceId: Int): List[Int] = storage.get(sourceId) match {
-    case Some(parent: mutable.HashMap) => parent.values.map(x => x.getTargetId).toList
+    case Some(parent: mutable.HashMap[Int, T]) => parent.values.map(x => x.getTargetId).toList
     case _ => List()
   }
 
@@ -53,7 +52,7 @@ trait ILinkTable[T <: ILink] {
    * @param targetId Идентификатор второго объекта
    */
   def deleteLink(sourceId: Int, targetId: Int): Unit = storage.get(sourceId) match {
-    case Some(parent: mutable.HashMap) => parent.remove(targetId)
+    case Some(parent: mutable.HashMap[Int, T]) => parent.remove(targetId)
     case _ =>
   }
 
