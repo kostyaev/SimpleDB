@@ -5,8 +5,12 @@ import scala.collection.mutable
 
 class DoctorTable extends IEntityTable[Doctor]
 
-class PatientTable extends IEntityTable[Doctor]
+class PatientTable extends IEntityTable[Patient]
 
-class WardTable extends IEntityTable[Doctor]
+class WardTable extends IEntityTable[Ward]
+
+object TableSerializer {
+
+}
 
 

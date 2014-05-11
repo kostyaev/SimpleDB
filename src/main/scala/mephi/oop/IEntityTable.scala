@@ -1,6 +1,8 @@
 package mephi.oop
 
 import scala.collection.mutable
+import argonaut.CodecJson
+import argonaut.Argonaut._
 
 /**
  * Интерфейс основной таблицы,
@@ -12,6 +14,7 @@ import scala.collection.mutable
 trait IEntityTable[T] {
 
   val storage: mutable.HashMap[Int, T] = new mutable.HashMap[Int, T]
+
 
   var nextId: Int = 0
 

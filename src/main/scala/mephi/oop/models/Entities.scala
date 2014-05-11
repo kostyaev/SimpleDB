@@ -1,9 +1,21 @@
 package mephi.oop.models
 
-case class Doctor(fio: String, age: Int)
+import argonaut.CodecJson
+import argonaut.Argonaut._
 
-case class Patient(fio: String, age: Int)
+case class Doctor(fio: String, age: Int) {
+  implicit def DoctorCodecJson: CodecJson[Doctor] =
+    casecodec2(Doctor.apply, Doctor.unapply)("fio", "age")
+}
 
-case class Ward(number: Int, building: Int)
+case class Patient(fio: String, age: Int) {
+  implicit def PatientCodecJson: CodecJson[Patient] =
+    casecodec2(Patient.apply, Patient.unapply)("fio", "age")
+}
+
+case class Ward(number: Int, building: Int) {
+  implicit def PatientCodecJson: CodecJson[Ward] =
+    casecodec2(Ward.apply, Ward.unapply)("number", "building")
+}
 
 
