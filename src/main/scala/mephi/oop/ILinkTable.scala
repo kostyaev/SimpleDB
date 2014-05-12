@@ -1,6 +1,7 @@
 package mephi.oop
 
 import scala.collection.mutable
+import scala.util.{Success, Failure, Try}
 
 trait ILinkTable[T <: ILink] {
 
@@ -26,9 +27,14 @@ trait ILinkTable[T <: ILink] {
    * @param targetId Идентификатор связанного объекта
    * @return Идентификатор источника
    */
-  def getSourceId(targetId: Int): Int = {
+  def getSourceId(targetId: Int): Option[Int] = {
     val result = storage.values.dropWhile(hashmap => !hashmap.values.exists(x => x.getTargetId() == targetId))
-    result.head.head._1
+    val answer = Try(result.head.head._2.getSourceId())
+    answer match {
+      case Success(x) => Some(x)
+      case _ => None
+    }
+
   }
 
   /**
