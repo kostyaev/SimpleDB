@@ -3,6 +3,7 @@ package mephi.oop
 import scala.collection.mutable
 import argonaut.CodecJson
 import argonaut.Argonaut._
+import scalaz.Alpha.T
 
 /**
  * Интерфейс основной таблицы,
@@ -49,5 +50,11 @@ trait IEntityTable[T] {
    */
 
   def delete(id: Int): Unit = storage.remove(id)
+
+  def clear():Unit = {
+    storage.clear()
+    nextId = 1
+  }
+
 
 }

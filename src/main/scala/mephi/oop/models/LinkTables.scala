@@ -3,7 +3,7 @@ package mephi.oop.models
 import mephi.oop.{ILinkTable}
 import scala.collection.mutable
 
-class DoctorPatientsTable extends ILinkTable[DoctorPatients]{
+object DoctorPatientsTable extends ILinkTable[DoctorPatients]{
   /**
    * Добавление связи
    *
@@ -33,7 +33,7 @@ class DoctorPatientsTable extends ILinkTable[DoctorPatients]{
 }
 
 
-class WardPatientsTable extends ILinkTable[WardPatients] {
+object WardPatientsTable extends ILinkTable[WardPatients] {
   /**
    * Добавление связи
    *
