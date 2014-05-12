@@ -6,9 +6,6 @@ trait ILinkTable[T <: ILink] {
 
   val storage: mutable.HashMap[Int, mutable.HashMap[Int,T]] = new mutable.HashMap[Int, mutable.HashMap[Int,T]]
 
-  var nextId: Int = 0
-
-
   /**
    * Получение объекта-связи
    *
