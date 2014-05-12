@@ -47,10 +47,7 @@ object serializer extends App {
   patientTable.add(patient)
   wardTable.add(ward)
 
-
-
   val data = DataContainer(1,doctorTable.storage,1,patientTable.storage,1,wardTable.storage, doctorPatientsTable.storage, wardPatientsTable.storage)
-
 
   import spray.json._
 

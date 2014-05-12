@@ -16,7 +16,7 @@ trait IEntityTable[T] {
   val storage: mutable.HashMap[Int, T] = new mutable.HashMap[Int, T]
 
 
-  var nextId: Int = 0
+  var nextId: Int = 1
 
   /**
    * Добавление объекта в таблицу
@@ -48,6 +48,6 @@ trait IEntityTable[T] {
    * @param id Идентификатор удаляемого объекта
    */
 
-  def delete(id: Int) = storage.remove(id)
+  def delete(id: Int): Unit = storage.remove(id)
 
 }

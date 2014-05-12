@@ -9,8 +9,4 @@ class PatientTable extends IEntityTable[Patient]
 
 class WardTable extends IEntityTable[Ward]
 
-object TableSerializer {
-
-}
-
 

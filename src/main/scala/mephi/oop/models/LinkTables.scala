@@ -10,10 +10,10 @@ class DoctorPatientsTable extends ILinkTable[DoctorPatients]{
    * @param link Добавляемая связь
    */
   override def addLink(link: DoctorPatients): Unit = storage.get(link.source) match {
-    case Some(parent: mutable.HashMap[Int, DoctorPatients]) => parent += (link.source -> link)
+    case Some(parent: mutable.HashMap[Int, DoctorPatients]) => parent += (link.target -> link)
     case _ =>
       val entry = new mutable.HashMap[Int, DoctorPatients]()
-      entry += link.source -> link
+      entry += link.target -> link
       storage += link.source -> entry
   }
 
@@ -24,10 +24,10 @@ class DoctorPatientsTable extends ILinkTable[DoctorPatients]{
    * @param targetId Идентификатор второго объекта
    */
   override def addLink(sourceId: Int, targetId: Int): Unit = storage.get(sourceId) match {
-    case Some(parent: mutable.HashMap[Int, DoctorPatients]) => parent += (sourceId -> DoctorPatients(sourceId, targetId))
+    case Some(parent: mutable.HashMap[Int, DoctorPatients]) => parent += (targetId -> DoctorPatients(sourceId, targetId))
     case _ =>
       val entry = new mutable.HashMap[Int, DoctorPatients]()
-      entry += sourceId -> DoctorPatients(sourceId, targetId)
+      entry += targetId -> DoctorPatients(sourceId, targetId)
       storage += sourceId -> entry
   }
 }
@@ -40,10 +40,10 @@ class WardPatientsTable extends ILinkTable[WardPatients] {
    * @param link Добавляемая связь
    */
   override def addLink(link: WardPatients): Unit = storage.get(link.source) match {
-    case Some(parent: mutable.HashMap[Int, WardPatients]) => parent += (link.source -> link)
+    case Some(parent: mutable.HashMap[Int, WardPatients]) => parent += (link.target -> link)
     case _ =>
       val entry = new mutable.HashMap[Int, WardPatients]()
-      entry += link.source -> link
+      entry += link.target -> link
       storage += link.source -> entry
   }
 
@@ -54,10 +54,10 @@ class WardPatientsTable extends ILinkTable[WardPatients] {
    * @param targetId Идентификатор второго объекта
    */
   override def addLink(sourceId: Int, targetId: Int): Unit = storage.get(sourceId) match {
-    case Some(parent: mutable.HashMap[Int, WardPatients]) => parent += (sourceId -> WardPatients(sourceId, targetId))
+    case Some(parent: mutable.HashMap[Int, WardPatients]) => parent += (targetId -> WardPatients(sourceId, targetId))
     case _ =>
       val entry = new mutable.HashMap[Int, WardPatients]()
-      entry += sourceId -> WardPatients(sourceId, targetId)
+      entry += targetId -> WardPatients(sourceId, targetId)
       storage += sourceId -> entry
   }
 
