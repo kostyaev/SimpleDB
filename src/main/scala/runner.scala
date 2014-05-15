@@ -1,24 +1,20 @@
 
-import mephi.oop.models.{Doctor, DoctorTable}
+import mephi.oop.gui.table.TableColumnHeaderSelected
+import mephi.oop.gui.{WardElems, PatientsElems, DoctorElems, SpecificBoxPanel}
+import mephi.oop.models._
+import mephi.oop.models.Doctor
+import mephi.oop.UIObjects
 import scala.swing._
-import scala.swing.event.{TableRowsSelected, TableColumnsSelected, TableEvent}
+import scala.swing.event.{ButtonClicked, TableRowsSelected, TableColumnsSelected}
 
-case class TableColumnHeaderSelected(override val source:Table, column: Int) extends TableEvent(source)
 
 object runner extends App {
-
-  val headers = Array.tabulate(10) {"Col-" + _}.toSeq
-  val rowData = Array.tabulate[Any](10, 10) {"" + _ + ":" + _}
 
   val id1 = DoctorTable.add(Doctor("House", 54))
   val id2 = DoctorTable.add(Doctor("Dorian", 28))
 
-  val doctorHeaders = List("ID", "ФИО", "Возраст")
-  val patientsHeaders = List("ID", "ФИО", "Возраст")
-  val wardHeaders = List("№ палаты", "№ здания")
-
-  val doctorData = DoctorTable.storage.toArray.map(x => Array(x._1, x._2.fio, x._2.age))
-
+  val id3 = PatientTable.add(Patient("John", 54))
+  val id4 = PatientTable.add(Patient("James", 28))
 
   val frame = new MainFrame {
     title = "DB Manager"
@@ -35,82 +31,29 @@ object runner extends App {
           sys.exit(0)
         })
       }
-      contents += new Menu("Таблица") {
-        contents += new MenuItem(Action("Доктора") {
-          //DoctorTable
+      contents += UIObjects.tableMenu
 
-        })
-        contents += new MenuItem(Action("Пациенты") {
-          //PatientTable
-
-        })
-        contents += new MenuItem(Action("Палаты") {
-          //WardTable
-
-        })
-        contents += new MenuItem(Action("Доктор-пациенты") {
-          //DoctorPatientsTable
-
-        })
-        contents += new MenuItem(Action("Палата-пациеты") {
-          //WardPatientsTable
-
-        })
-
-      }
     }
-    contents = mainSection
-    size = new Dimension(500,500)
+    listenTo(UIObjects.doctorItem, UIObjects.patientItem, UIObjects.wardItem)
+
+    reactions += {
+      case ButtonClicked(UIObjects.doctorItem) => contents = new SpecificBoxPanel[Doctor](Orientation.Vertical) with DoctorElems
+      case ButtonClicked(UIObjects.patientItem) => contents = new SpecificBoxPanel[Patient](Orientation.Vertical) with PatientsElems
+      case ButtonClicked(UIObjects.wardItem) => contents = new SpecificBoxPanel[Ward](Orientation.Vertical) with WardElems
+
+    }
+    size = new Dimension(600,600)
     centerOnScreen
+
+
   }
   frame.visible = true
 
 
-  lazy val mainSection = new BoxPanel(Orientation.Horizontal) {
-
-    val rightSide = new BoxPanel(Orientation.Vertical) {
-      contents += new Button("Add row")
-      contents += new Button("Delete row")
+  def getContent(input: BoxPanel, table: Table) = new BoxPanel(Orientation.Vertical) {
+    val bottom = new BoxPanel(Orientation.Horizontal) {
+      contents += new Button("Edit row")
     }
-    contents += leftSide(doctorData, doctorHeaders)
-    contents += rightSide
-
-  }
-
-  def leftSide(rowData:Array[Array[Any]], headers:Seq[String]) = new BoxPanel(Orientation.Vertical) {
-    val textFields = new BoxPanel(Orientation.Horizontal) {
-      contents += new BoxPanel(Orientation.Vertical) {
-        contents += new Label("ФИО")
-        contents += new TextField
-      }
-      contents += new BoxPanel(Orientation.Vertical) {
-        contents += new Label("Возраст")
-        contents += new TextField
-      }
-      contents += new BoxPanel(Orientation.Vertical) {
-        contents += new Label(" ")
-        contents += new Button("Добавить")
-      }
-
-    }
-    val table  =  new Table(rowData, headers) {
-      selection.elementMode = Table.ElementMode.Cell
-      //selection.intervalMode = Table.IntervalMode.Single
-
-      val header = {
-        import java.awt.event.{MouseEvent, MouseAdapter}
-
-        val makeHeaderEvent = TableColumnHeaderSelected(this, _:Int)
-        val tableHeader = peer.getTableHeader
-        tableHeader.addMouseListener(new MouseAdapter() {
-          override def mouseClicked(e: MouseEvent) {
-            selection.publish(makeHeaderEvent(tableHeader.columnAtPoint(e.getPoint)))
-          }
-        })
-        tableHeader
-      }
-    }
-
     val output = new TextArea(6, 40) { editable = false }
 
     listenTo(table.selection)
@@ -123,10 +66,12 @@ object runner extends App {
       case TableColumnHeaderSelected(source, column) =>
         outputSelection(source, "Column header %s selected" format column)
       case e => println("%s => %s" format(e.getClass.getSimpleName, e.toString))
+
     }
 
-    contents += textFields
+    contents += input
     contents += new ScrollPane(table)
+    contents += bottom
     contents += new ScrollPane(output)
 
     def outputSelection(table: Table, msg: String) {
@@ -136,6 +81,8 @@ object runner extends App {
       val cols = table.selection.columns.mkString(", ")
       output.append("%s\n  Lead: %s, %s; Rows: %s; Columns: %s\n" format (msg, rowId, colId, rows, cols))
     }
+
+
   }
 
 
