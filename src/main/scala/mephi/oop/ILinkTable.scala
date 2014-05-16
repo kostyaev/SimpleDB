@@ -1,11 +1,15 @@
 package mephi.oop
 
-import scala.collection.mutable
+import scala.collection.mutable.{MutableList}
 import scala.util.{Success, Failure, Try}
+import scala.collection.mutable
+import mephi.oop.models.DoctorPatients
 
 trait ILinkTable[T <: ILink] {
 
-  val storage: mutable.HashMap[Int, mutable.HashMap[Int,T]] = new mutable.HashMap[Int, mutable.HashMap[Int,T]]
+  val storage: mutable.HashMap[Int, T] = new mutable.HashMap[Int, T]
+
+  var nextId: Int = 1
 
   /**
    * Получение объекта-связи
@@ -14,9 +18,12 @@ trait ILinkTable[T <: ILink] {
    * @param targetId Идентификатор второго объекта
    * @return Объект связи
    */
-  def getLink(sourceId: Int, targetId: Int): Option[T] = storage.get(sourceId) match {
-    case Some(parent: mutable.HashMap[Int, T]) => parent.get(targetId)
-    case _ => None
+  def getLink(sourceId: Int, targetId: Int): Option[T] = {
+    val result:Iterable[T] = for((k,v) <- storage if v.getSourceId() == sourceId && v.getTargetId() == targetId) yield v
+    result.toList match {
+      case Nil => None
+      case x::xs => Some(x)
+    }
   }
 
   /**
@@ -28,10 +35,8 @@ trait ILinkTable[T <: ILink] {
    * @return Идентификатор источника
    */
   def getSourceId(targetId: Int): Option[Int] = {
-    val result = storage.values.dropWhile(hashmap => !hashmap.values.exists(x => x.getTargetId() == targetId))
-    val answer = Try(result.head.head._2.getSourceId())
-    answer match {
-      case Success(x) => Some(x)
+    storage.find(e => e._2.getTargetId == targetId) match {
+      case Some((k,v)) => Some(v.getSourceId())
       case _ => None
     }
 
@@ -43,10 +48,8 @@ trait ILinkTable[T <: ILink] {
    * @param sourceId Идентификатор источника
    * @return Список идентификаторов
    */
-  def getTargetIds(sourceId: Int): List[Int] = storage.get(sourceId) match {
-    case Some(parent: mutable.HashMap[Int, T]) => parent.values.map(x => x.getTargetId).toList
-    case _ => List()
-  }
+  def getTargetIds(sourceId: Int): List[Int] =
+    storage.filter(e => e._2.getSourceId() == sourceId).map(x => x._2.getTargetId()).toList
 
   /**
    * Удаление связи
@@ -54,9 +57,23 @@ trait ILinkTable[T <: ILink] {
    * @param sourceId Идентификатор первого объекта (источника связи)
    * @param targetId Идентификатор второго объекта
    */
-  def deleteLink(sourceId: Int, targetId: Int): Unit = storage.get(sourceId) match {
-    case Some(parent: mutable.HashMap[Int, T]) => parent.remove(targetId)
-    case _ =>
+  def deleteLink(sourceId: Int, targetId: Int): Unit = {
+    storage.find(e => e._2.getSourceId() == sourceId && e._2.getTargetId() == targetId) match {
+      case Some((k,v)) => storage.remove(k)
+      case _ =>
+    }
+  }
+
+  /**
+   * Удаление связи
+   *
+   * @param id Идентификатор ссылки
+   */
+  def deleteLink(id: Int): Unit = {
+    storage.find(e => e._1 == id) match {
+      case Some((k,v)) => storage.remove(k)
+      case _ =>
+    }
   }
 
   /**
@@ -67,12 +84,15 @@ trait ILinkTable[T <: ILink] {
    */
   def addLink(sourceId: Int, targetId: Int): Unit
 
-
-
   /**
    * Добавление связи
    *
    * @param link Добавляемая связь
    */
-  def addLink(link: T): Unit
+  def addLink(link: T): Unit = {
+    storage += nextId -> link
+    nextId += 1
+  }
+
+  def clear() = storage.clear()
 }

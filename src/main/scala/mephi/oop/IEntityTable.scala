@@ -16,7 +16,6 @@ trait IEntityTable[T] {
 
   val storage: mutable.HashMap[Int, T] = new mutable.HashMap[Int, T]
 
-
   var nextId: Int = 1
 
   /**

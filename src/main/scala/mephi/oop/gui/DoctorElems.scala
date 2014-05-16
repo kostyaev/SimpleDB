@@ -1,11 +1,9 @@
 package mephi.oop.gui
 
 import mephi.oop.models.{Doctor, DoctorTable}
-import mephi.oop.IEntityTable
-import scala.collection.mutable.ArrayBuffer
 
 
-trait DoctorElems extends GenericElems[Doctor] {
+trait DoctorElems extends GenericElems {
 
   override lazy val name1: String = "ФИО"
 
@@ -16,9 +14,11 @@ trait DoctorElems extends GenericElems[Doctor] {
 
   override lazy val columnNames: Seq[String] = Seq("ID", "ФИО", "Возраст")
 
-  override lazy val entityTable: IEntityTable[Doctor] = DoctorTable
+  override protected def save(x: String, y: String): Unit = DoctorTable.add(Doctor(x,y.toInt))
 
-  override def save(x: String, y: String): Unit = DoctorTable.add(Doctor(x, y.toInt))
+  override protected def delete(id: Int): Unit = DoctorTable.delete(id)
+
+  override def isCorrect(x: String, y: String): Boolean = !x.isEmpty && !y.isEmpty
 
 
 

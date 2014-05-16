@@ -37,9 +37,9 @@ object runner extends App {
     listenTo(UIObjects.doctorItem, UIObjects.patientItem, UIObjects.wardItem)
 
     reactions += {
-      case ButtonClicked(UIObjects.doctorItem) => contents = new SpecificBoxPanel[Doctor](Orientation.Vertical) with DoctorElems
-      case ButtonClicked(UIObjects.patientItem) => contents = new SpecificBoxPanel[Patient](Orientation.Vertical) with PatientsElems
-      case ButtonClicked(UIObjects.wardItem) => contents = new SpecificBoxPanel[Ward](Orientation.Vertical) with WardElems
+      case ButtonClicked(UIObjects.doctorItem) => contents = new SpecificBoxPanel(Orientation.Vertical) with DoctorElems
+      case ButtonClicked(UIObjects.patientItem) => contents = new SpecificBoxPanel(Orientation.Vertical) with PatientsElems
+      case ButtonClicked(UIObjects.wardItem) => contents = new SpecificBoxPanel(Orientation.Vertical) with WardElems
 
     }
     size = new Dimension(600,600)

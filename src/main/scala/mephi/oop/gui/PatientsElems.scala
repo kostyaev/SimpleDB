@@ -1,10 +1,9 @@
 package mephi.oop.gui
 
 import mephi.oop.models.{Patient, PatientTable}
-import mephi.oop.IEntityTable
 
 
-trait PatientsElems extends GenericElems[Patient] {
+trait PatientsElems extends GenericElems {
 
   override lazy val name1: String = "ФИО"
 
@@ -15,8 +14,10 @@ trait PatientsElems extends GenericElems[Patient] {
 
   override lazy val columnNames: Seq[String] = Seq("ID", "ФИО", "Возраст")
 
-  override lazy val entityTable: IEntityTable[Patient] = PatientTable
+  override protected def save(x: String, y: String): Unit = PatientTable.add(Patient(x,y.toInt))
 
-  override def save(x: String, y: String): Unit = PatientTable.add(Patient(x, y.toInt))
+  override protected def delete(id: Int) = PatientTable.delete(id)
+
+  override def isCorrect(x: String, y: String): Boolean = !x.isEmpty && !y.isEmpty
 
 }

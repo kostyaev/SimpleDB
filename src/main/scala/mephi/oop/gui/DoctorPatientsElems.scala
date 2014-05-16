@@ -1,9 +1,10 @@
 package mephi.oop.gui
 
-import mephi.oop.models.{Ward, WardTable}
+import mephi.oop.models._
+import mephi.oop.models.Ward
 
 
-trait WardElems extends GenericElems {
+trait DoctorPatientsElems extends GenericElems {
 
   override lazy val name1: String = "Номер палаты"
 
@@ -14,9 +15,7 @@ trait WardElems extends GenericElems {
 
   override lazy val columnNames: Seq[String] = Seq("ID", "№ палаты", "№ здания")
 
-  override protected def save(x: String, y: String) = WardTable.add(Ward(x.toInt,y.toInt))
-
-  override protected def delete(id: Int) = WardTable.delete(id)
+  override def save(x: String, y: String): Unit = WardTable.add(Ward(x.toInt, y.toInt))
 
   override def isCorrect(x: String, y: String): Boolean = !x.isEmpty && !y.isEmpty
 

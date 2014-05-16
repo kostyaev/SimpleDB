@@ -16,6 +16,7 @@ case class SpecificTableModel(var rowData: Array[Array[String]], columnNames: Se
   }
   def addRow(data: Array[String]) {
     rowData ++= Array(data.asInstanceOf[Array[String]])
+    this.fireTableDataChanged()
   }
   def delRows(ids: Seq[String]) =  {
     rowData = rowData.filter(row => !ids.contains(row(0)))

@@ -9,6 +9,7 @@ import mephi.oop.models.DoctorPatients
 class LinkTableSuite extends FlatSpec with Matchers {
 
   "A DoctorPatientsTable" should "contain element after adding it" in {
+    DoctorPatientsTable.clear()
     DoctorPatientsTable addLink DoctorPatients(1,1)
     DoctorPatientsTable getLink (1,1) should equal(Some(DoctorPatients(1,1)))
 
@@ -27,6 +28,7 @@ class LinkTableSuite extends FlatSpec with Matchers {
 
 
   "A DoctorPatientsTable" should "not contain element after removing it" in {
+    DoctorPatientsTable.clear()
     DoctorPatientsTable addLink DoctorPatients(1,2)
     DoctorPatientsTable getLink(1,2) should not be None
     DoctorPatientsTable deleteLink(1,2)
@@ -41,6 +43,7 @@ class LinkTableSuite extends FlatSpec with Matchers {
   }
 
   "A DoctorPatientsTable" should "return correct sourceId" in {
+    DoctorPatientsTable.clear()
     DoctorPatientsTable addLink DoctorPatients(1,2)
     DoctorPatientsTable addLink DoctorPatients(1,5)
     DoctorPatientsTable addLink DoctorPatients(1,3)
@@ -55,6 +58,7 @@ class LinkTableSuite extends FlatSpec with Matchers {
   }
 
   "A DoctorPatientsTable" should "return correct target ids" in {
+    DoctorPatientsTable.clear()
     DoctorPatientsTable addLink DoctorPatients(1,2)
     DoctorPatientsTable addLink DoctorPatients(1,5)
     DoctorPatientsTable addLink DoctorPatients(1,3)
@@ -68,6 +72,7 @@ class LinkTableSuite extends FlatSpec with Matchers {
   }
 
   "A WardPatientsTable" should "contain element after adding it" in {
+    WardPatientsTable.clear()
     WardPatientsTable addLink WardPatients(1,1)
     WardPatientsTable getLink (1,1) should equal(Some(WardPatients(1,1)))
 
@@ -85,6 +90,7 @@ class LinkTableSuite extends FlatSpec with Matchers {
 
 
   "A WardPatientsTable" should "not contain element after removing it" in {
+    WardPatientsTable.clear()
     WardPatientsTable addLink WardPatients(1,2)
     WardPatientsTable getLink(1,2) should not be None
     WardPatientsTable deleteLink(1,2)
@@ -99,6 +105,7 @@ class LinkTableSuite extends FlatSpec with Matchers {
   }
 
   "A WardPatientsTable" should "return correct sourceId" in {
+    WardPatientsTable.clear()
     WardPatientsTable addLink WardPatients(1,2)
     WardPatientsTable addLink WardPatients(1,5)
     WardPatientsTable addLink WardPatients(1,3)
@@ -112,6 +119,7 @@ class LinkTableSuite extends FlatSpec with Matchers {
   }
 
   "A WardPatientsTable" should "return correct target ids" in {
+    WardPatientsTable.clear()
     WardPatientsTable addLink WardPatients(1,2)
     WardPatientsTable addLink WardPatients(1,5)
     WardPatientsTable addLink WardPatients(1,3)
