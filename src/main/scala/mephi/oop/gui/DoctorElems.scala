@@ -2,6 +2,7 @@ package mephi.oop.gui
 
 import mephi.oop.models.{Doctor, DoctorTable}
 import mephi.oop.IEntityTable
+import scala.collection.mutable.ArrayBuffer
 
 
 trait DoctorElems extends GenericElems[Doctor] {
@@ -11,7 +12,7 @@ trait DoctorElems extends GenericElems[Doctor] {
   override lazy val name2: String = "Возраст"
 
   override lazy val rowData: Array[Array[String]] =
-    DoctorTable.storage.toArray.map(x => Array(x._1.toString, x._2.fio.toString, x._2.age.toString))
+    DoctorTable.storage.map(x => Array(x._1.toString, x._2.fio.toString, x._2.age.toString)).toArray
 
   override lazy val columnNames: Seq[String] = Seq("ID", "ФИО", "Возраст")
 

@@ -17,17 +17,17 @@ object runner extends App {
   val id4 = PatientTable.add(Patient("James", 28))
 
   val frame = new MainFrame {
-    title = "DB Manager"
+    title = "Редактор БД"
     menuBar = new MenuBar {
       contents += new Menu("Файл") {
-        contents += new MenuItem(Action("Open") {
+        contents += new MenuItem(Action("Открыть") {
           //openFile
         })
-        contents += new MenuItem(Action("Save") {
+        contents += new MenuItem(Action("Сохранить") {
           //saveFile
         })
         contents += new Separator
-        contents += new MenuItem(Action("Exit") {
+        contents += new MenuItem(Action("Выйти") {
           sys.exit(0)
         })
       }

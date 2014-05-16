@@ -10,7 +10,8 @@ class SpecificBoxPanel[T](orientation: Orientation.Value) extends BoxPanel(orien
   val text1: TextField = new TextField()
   val text2: TextField = new TextField()
 
-  val button: Button = new Button("Добавить")
+  val addButton: Button = new Button("Добавить")
+  val deleteButton: Button = new Button("Удалить")
 
   lazy val input = new BoxPanel(Orientation.Horizontal) {
     contents += new BoxPanel(Orientation.Vertical) {
@@ -23,14 +24,27 @@ class SpecificBoxPanel[T](orientation: Orientation.Value) extends BoxPanel(orien
     }
     contents += new BoxPanel(Orientation.Vertical) {
       contents += new Label(" ")
-      contents += button
+      contents += addButton
     }
-    listenTo(button)
+    contents += new BoxPanel(Orientation.Vertical) {
+      contents += new Label(" ")
+      contents += deleteButton
+    }
+
+    listenTo(addButton, deleteButton)
+
     reactions += {
-      case ButtonClicked(`button`) =>
+      case ButtonClicked(`addButton`) if !text1.text.isEmpty && !text2.text.isEmpty =>
         table.model.asInstanceOf[SpecificTableModel].addRow(Array(entityTable.nextId.toString, text1.text, text2.text))
         save(text1.text, text2.text)
         table.model.asInstanceOf[SpecificTableModel].fireTableDataChanged()
+
+      case ButtonClicked(`deleteButton`) =>
+        val tableModel = table.model.asInstanceOf[SpecificTableModel]
+        val ids = (for(rowId <- table.selection.rows) yield tableModel.getValueAt(rowId,0)).toSeq
+        ids.foreach(id => entityTable.delete(id.toInt))
+        tableModel.delRows(ids)
+      case _ =>
     }
   }
 
