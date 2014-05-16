@@ -1,15 +1,14 @@
 
+import mephi.oop.gui._
 import mephi.oop.gui.table.TableColumnHeaderSelected
-import mephi.oop.gui.{WardElems, PatientsElems, DoctorElems, SpecificBoxPanel}
 import mephi.oop.models._
 import mephi.oop.models.Doctor
-import mephi.oop.UIObjects
+import mephi.oop.models.Patient
 import scala.swing._
-import scala.swing.event.{ButtonClicked, TableRowsSelected, TableColumnsSelected}
+import scala.swing.event.{TableRowsSelected, TableColumnsSelected}
 
 
 object runner extends App {
-
   val id1 = DoctorTable.add(Doctor("House", 54))
   val id2 = DoctorTable.add(Doctor("Dorian", 28))
 
@@ -17,6 +16,7 @@ object runner extends App {
   val id4 = PatientTable.add(Patient("James", 28))
 
   val frame = new MainFrame {
+    thisFrame: MainFrame =>
     title = "Редактор БД"
     menuBar = new MenuBar {
       contents += new Menu("Файл") {
@@ -31,21 +31,31 @@ object runner extends App {
           sys.exit(0)
         })
       }
-      contents += UIObjects.tableMenu
-
-    }
-    listenTo(UIObjects.doctorItem, UIObjects.patientItem, UIObjects.wardItem)
-
-    reactions += {
-      case ButtonClicked(UIObjects.doctorItem) => contents = new SpecificBoxPanel(Orientation.Vertical) with DoctorElems
-      case ButtonClicked(UIObjects.patientItem) => contents = new SpecificBoxPanel(Orientation.Vertical) with PatientsElems
-      case ButtonClicked(UIObjects.wardItem) => contents = new SpecificBoxPanel(Orientation.Vertical) with WardElems
-
+      contents += new Menu("Таблица") {
+        contents += new MenuItem(Action("Доктора") {
+          thisFrame.contents = new SpecificBoxPanel(Orientation.Vertical) with DoctorElems
+          thisFrame.title = "Таблица докторов"
+        })
+        contents += new MenuItem(Action("Пациенты") {
+          thisFrame.contents = new SpecificBoxPanel(Orientation.Vertical) with PatientElems
+          thisFrame.title = "Таблица пациентов"
+        })
+        contents += new MenuItem(Action("Палаты") {
+          thisFrame.contents = new SpecificBoxPanel(Orientation.Vertical) with WardElems
+          thisFrame.title = "Таблица палат"
+        })
+        contents += new MenuItem(Action("Доктор-Пациенты") {
+          thisFrame.contents = new SpecificBoxPanel(Orientation.Vertical) with DoctorPatientsElems
+          thisFrame.title = "Таблица связей доктор-пациенты"
+        })
+        contents += new MenuItem(Action("Палата-Пациенты") {
+          thisFrame.contents = new SpecificBoxPanel(Orientation.Vertical) with WardPatientsElems
+          thisFrame.title = "Таблица связей палаты-пациенты"
+        })
+      }
     }
     size = new Dimension(600,600)
-    centerOnScreen
-
-
+    centerOnScreen()
   }
   frame.visible = true
 
@@ -81,10 +91,6 @@ object runner extends App {
       val cols = table.selection.columns.mkString(", ")
       output.append("%s\n  Lead: %s, %s; Rows: %s; Columns: %s\n" format (msg, rowId, colId, rows, cols))
     }
-
-
   }
-
-
 
 }

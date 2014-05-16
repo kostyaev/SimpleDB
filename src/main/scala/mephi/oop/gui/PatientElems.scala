@@ -1,9 +1,9 @@
 package mephi.oop.gui
 
-import mephi.oop.models.{Patient, PatientTable}
+import mephi.oop.models.{DoctorTable, Patient, PatientTable}
 
 
-trait PatientsElems extends GenericElems {
+trait PatientElems extends GenericElems {
 
   override lazy val name1: String = "ФИО"
 
@@ -13,6 +13,8 @@ trait PatientsElems extends GenericElems {
     PatientTable.storage.toArray.map(x => Array(x._1.toString, x._2.fio.toString, x._2.age.toString))
 
   override lazy val columnNames: Seq[String] = Seq("ID", "ФИО", "Возраст")
+
+  override def nextId = PatientTable.nextId
 
   override protected def save(x: String, y: String): Unit = PatientTable.add(Patient(x,y.toInt))
 

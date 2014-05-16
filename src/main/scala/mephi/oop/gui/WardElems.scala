@@ -1,6 +1,6 @@
 package mephi.oop.gui
 
-import mephi.oop.models.{Ward, WardTable}
+import mephi.oop.models.{DoctorTable, Ward, WardTable}
 
 
 trait WardElems extends GenericElems {
@@ -13,6 +13,8 @@ trait WardElems extends GenericElems {
     WardTable.storage.toArray.map(x => Array(x._1.toString, x._2.number.toString, x._2.building.toString))
 
   override lazy val columnNames: Seq[String] = Seq("ID", "№ палаты", "№ здания")
+
+  override def nextId = WardTable.nextId
 
   override protected def save(x: String, y: String) = WardTable.add(Ward(x.toInt,y.toInt))
 

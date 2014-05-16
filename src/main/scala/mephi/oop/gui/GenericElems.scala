@@ -13,7 +13,7 @@ trait GenericElems {
 
   lazy val columnNames: Seq[String] = ???
 
-  lazy val nextId: Int = ???
+  def nextId: Int = ???
 
   lazy val table = new Table() {
     model = SpecificTableModel(rowData, columnNames)

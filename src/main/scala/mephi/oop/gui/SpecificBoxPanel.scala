@@ -38,7 +38,6 @@ class SpecificBoxPanel(orientation: Orientation.Value) extends BoxPanel(orientat
       case _ =>
     }
   }
-
   contents ++= Seq(input, new ScrollPane(table))
 
 }

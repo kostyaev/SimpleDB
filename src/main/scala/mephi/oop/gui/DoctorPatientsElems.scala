@@ -15,7 +15,12 @@ trait DoctorPatientsElems extends GenericElems {
 
   override lazy val columnNames: Seq[String] = Seq("ID", "№ палаты", "№ здания")
 
-  override def save(x: String, y: String): Unit = WardTable.add(Ward(x.toInt, y.toInt))
+  override def nextId = DoctorPatientsTable.nextId
+
+  override protected def save(x: String, y: String) = DoctorPatientsTable.addLink(x.toInt,y.toInt)
+
+  override protected def delete(id: Int) = DoctorPatientsTable.deleteLink(id)
+
 
   override def isCorrect(x: String, y: String): Boolean = !x.isEmpty && !y.isEmpty
 

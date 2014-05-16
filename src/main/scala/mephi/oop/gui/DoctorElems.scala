@@ -14,6 +14,8 @@ trait DoctorElems extends GenericElems {
 
   override lazy val columnNames: Seq[String] = Seq("ID", "ФИО", "Возраст")
 
+  override def nextId = DoctorTable.nextId
+
   override protected def save(x: String, y: String): Unit = DoctorTable.add(Doctor(x,y.toInt))
 
   override protected def delete(id: Int): Unit = DoctorTable.delete(id)

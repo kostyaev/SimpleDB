@@ -15,6 +15,8 @@ trait WardPatientsElems extends GenericElems {
 
   override lazy val columnNames: Seq[String] = Seq("ID", "№ палаты", "№ здания")
 
+  override def nextId = WardPatientsTable.nextId
+
   override protected def save(x: String, y: String) = WardPatientsTable.addLink(x.toInt,y.toInt)
 
   override protected def delete(id: Int) = WardPatientsTable.deleteLink(id)
