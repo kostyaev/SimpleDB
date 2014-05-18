@@ -1,33 +1,22 @@
 
 import mephi.oop.gui._
-import mephi.oop.gui.table.TableColumnHeaderSelected
-import mephi.oop.models._
-import mephi.oop.models.Doctor
-import mephi.oop.models.Patient
-import mephi.oop.Serializer
 import scala.swing._
-import scala.swing.event.{TableRowsSelected, TableColumnsSelected}
 
 
 object runner extends App {
-  val id1 = DoctorTable.add(Doctor("House", 54))
-  val id2 = DoctorTable.add(Doctor("Dorian", 28))
 
-  val id3 = PatientTable.add(Patient("John", 54))
-  val id4 = PatientTable.add(Patient("James", 28))
-
-  val frame = new MainFrame {
+  val frame = new MainFrame with IOHelper {
     thisFrame: MainFrame =>
     title = "Редактор БД"
     menuBar = new MenuBar {
       contents += new Menu("Файл") {
         contents += new MenuItem(Action("Открыть") {
-          Serializer.load()
+          loadDBFile()
           thisFrame.contents = new SpecificBoxPanel(Orientation.Vertical) with DoctorElems
           thisFrame.title = "Таблица докторов"
         })
         contents += new MenuItem(Action("Сохранить") {
-          Serializer.save()
+          saveDBFile()
         })
         contents += new Separator
         contents += new MenuItem(Action("Выйти") {
@@ -56,8 +45,16 @@ object runner extends App {
           thisFrame.title = "Таблица связей палаты-пациенты"
         })
       }
+      contents += new Menu("Запросы") {
+        contents += new MenuItem(Action("Запрос 1") {
+          thisFrame.contents = new QueryBoxPanel(Orientation.Vertical)
+          thisFrame.title = "Запрос 1"
+        })
+      }
     }
-    size = new Dimension(600,600)
+    contents = new SpecificBoxPanel(Orientation.Vertical) with DoctorElems
+    title = "Таблица докторов"
+    //size = new Dimension(600,600)
     centerOnScreen()
   }
   frame.visible = true

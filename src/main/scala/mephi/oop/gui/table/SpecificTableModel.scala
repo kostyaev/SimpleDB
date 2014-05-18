@@ -23,6 +23,11 @@ case class SpecificTableModel(var rowData: Array[Array[String]], columnNames: Se
     this.fireTableDataChanged()
   }
   def updateRowData(rowData: Array[Array[String]]) = this.rowData = rowData
+
+  def update(rowData: Array[Array[String]]) = {
+    this.rowData = rowData
+    this.fireTableDataChanged()
+  }
 }
 
 case class TableColumnHeaderSelected(override val source:Table, column: Int) extends TableEvent(source)

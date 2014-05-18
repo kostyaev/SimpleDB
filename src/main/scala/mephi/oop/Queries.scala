@@ -16,7 +16,7 @@ object Queries {
     case None => List()
   }
 
-  def getMostPopulatedWard(d: Doctor) =
+  def getMostPopulatedWard(d: Doctor): Option[Ward] =
     getAllWardsOfDoctor(d) match {
      case List() => None
      case nonEmptyList => WardTable.get(nonEmptyList.groupBy(x => x).map(t => (t._1, t._2.size)).maxBy(e => e._2)._1)
