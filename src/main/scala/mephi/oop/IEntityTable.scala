@@ -4,6 +4,7 @@ import scala.collection.mutable
 import argonaut.CodecJson
 import argonaut.Argonaut._
 import scalaz.Alpha.T
+import mephi.oop.models.Doctor
 
 /**
  * Интерфейс основной таблицы,
@@ -53,6 +54,12 @@ trait IEntityTable[T] {
   def clear():Unit = {
     storage.clear()
     nextId = 1
+  }
+
+  def load(id: Int, data: Map[Int, T]) = {
+    storage.clear()
+    storage ++= data
+    nextId = id
   }
 
 

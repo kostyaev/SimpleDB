@@ -6,12 +6,12 @@ import mephi.oop.models.Ward
 
 trait WardPatientsElems extends GenericElems {
 
-  override lazy val name1: String = "Номер палаты"
+  override lazy val name1: String = "ID палаты"
 
-  override lazy val name2: String = "Номер строения"
+  override lazy val name2: String = "ID пациента"
 
-  override lazy val rowData: Array[Array[String]] =
-    WardTable.storage.toArray.map(x => Array(x._1.toString, x._2.number.toString, x._2.building.toString))
+  override def rowData: Array[Array[String]] =
+    WardPatientsTable.storage.toArray.map(x => Array(x._1.toString, x._2.source.toString, x._2.target.toString))
 
   override lazy val columnNames: Seq[String] = Seq("ID", "№ палаты", "№ здания")
 

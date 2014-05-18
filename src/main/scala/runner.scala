@@ -4,6 +4,7 @@ import mephi.oop.gui.table.TableColumnHeaderSelected
 import mephi.oop.models._
 import mephi.oop.models.Doctor
 import mephi.oop.models.Patient
+import mephi.oop.Serializer
 import scala.swing._
 import scala.swing.event.{TableRowsSelected, TableColumnsSelected}
 
@@ -21,10 +22,12 @@ object runner extends App {
     menuBar = new MenuBar {
       contents += new Menu("Файл") {
         contents += new MenuItem(Action("Открыть") {
-          //openFile
+          Serializer.load()
+          thisFrame.contents = new SpecificBoxPanel(Orientation.Vertical) with DoctorElems
+          thisFrame.title = "Таблица докторов"
         })
         contents += new MenuItem(Action("Сохранить") {
-          //saveFile
+          Serializer.save()
         })
         contents += new Separator
         contents += new MenuItem(Action("Выйти") {
@@ -60,37 +63,37 @@ object runner extends App {
   frame.visible = true
 
 
-  def getContent(input: BoxPanel, table: Table) = new BoxPanel(Orientation.Vertical) {
-    val bottom = new BoxPanel(Orientation.Horizontal) {
-      contents += new Button("Edit row")
-    }
-    val output = new TextArea(6, 40) { editable = false }
-
-    listenTo(table.selection)
-
-    reactions += {
-      case TableRowsSelected(source, range, false) =>
-        outputSelection(source, "Rows selected, changes: %s" format range)
-      case TableColumnsSelected(source, range, false) =>
-        outputSelection(source, "Columns selected, changes: %s" format range)
-      case TableColumnHeaderSelected(source, column) =>
-        outputSelection(source, "Column header %s selected" format column)
-      case e => println("%s => %s" format(e.getClass.getSimpleName, e.toString))
-
-    }
-
-    contents += input
-    contents += new ScrollPane(table)
-    contents += bottom
-    contents += new ScrollPane(output)
-
-    def outputSelection(table: Table, msg: String) {
-      val rowId = table.selection.rows.leadIndex
-      val colId = table.selection.columns.leadIndex
-      val rows = table.selection.rows.mkString(", ")
-      val cols = table.selection.columns.mkString(", ")
-      output.append("%s\n  Lead: %s, %s; Rows: %s; Columns: %s\n" format (msg, rowId, colId, rows, cols))
-    }
-  }
+//  def getContent(input: BoxPanel, table: Table) = new BoxPanel(Orientation.Vertical) {
+//    val bottom = new BoxPanel(Orientation.Horizontal) {
+//      contents += new Button("Edit row")
+//    }
+//    val output = new TextArea(6, 40) { editable = false }
+//
+//    listenTo(table.selection)
+//
+//    reactions += {
+//      case TableRowsSelected(source, range, false) =>
+//        outputSelection(source, "Rows selected, changes: %s" format range)
+//      case TableColumnsSelected(source, range, false) =>
+//        outputSelection(source, "Columns selected, changes: %s" format range)
+//      case TableColumnHeaderSelected(source, column) =>
+//        outputSelection(source, "Column header %s selected" format column)
+//      case e => println("%s => %s" format(e.getClass.getSimpleName, e.toString))
+//
+//    }
+//
+//    contents += input
+//    contents += new ScrollPane(table)
+//    contents += bottom
+//    contents += new ScrollPane(output)
+//
+//    def outputSelection(table: Table, msg: String) {
+//      val rowId = table.selection.rows.leadIndex
+//      val colId = table.selection.columns.leadIndex
+//      val rows = table.selection.rows.mkString(", ")
+//      val cols = table.selection.columns.mkString(", ")
+//      output.append("%s\n  Lead: %s, %s; Rows: %s; Columns: %s\n" format (msg, rowId, colId, rows, cols))
+//    }
+//  }
 
 }

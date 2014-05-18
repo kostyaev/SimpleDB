@@ -9,7 +9,7 @@ trait GenericElems {
 
   lazy val name2: String = ???
 
-  lazy val rowData: Array[Array[String]] = ???
+  def rowData: Array[Array[String]] = ???
 
   lazy val columnNames: Seq[String] = ???
 

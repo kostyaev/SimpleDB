@@ -94,5 +94,14 @@ trait ILinkTable[T <: ILink] {
     nextId += 1
   }
 
-  def clear() = storage.clear()
+  def clear():Unit = {
+    storage.clear()
+    nextId = 1
+  }
+
+  def load(id: Int, data: Map[Int, T]) = {
+    storage.clear()
+    storage ++= data
+    nextId = id
+  }
 }

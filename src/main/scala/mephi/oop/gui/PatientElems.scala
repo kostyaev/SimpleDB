@@ -9,7 +9,7 @@ trait PatientElems extends GenericElems {
 
   override lazy val name2: String = "Возраст"
 
-  override lazy val rowData: Array[Array[String]] =
+  override def rowData: Array[Array[String]] =
     PatientTable.storage.toArray.map(x => Array(x._1.toString, x._2.fio.toString, x._2.age.toString))
 
   override lazy val columnNames: Seq[String] = Seq("ID", "ФИО", "Возраст")
