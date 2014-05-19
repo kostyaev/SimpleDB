@@ -1,7 +1,8 @@
 package mephi.oop.gui
 
-import scala.swing.Table
+import scala.swing.{TextArea, Table}
 import mephi.oop.gui.table.{TableColumnHeaderSelected, SpecificTableModel}
+import scala.util.{Failure, Try}
 
 trait GenericElems {
 
@@ -14,6 +15,8 @@ trait GenericElems {
   lazy val columnNames: Seq[String] = ???
 
   def nextId: Int = ???
+
+  lazy val output: TextArea = ???
 
   lazy val table = new Table() {
     model = SpecificTableModel(rowData, columnNames)
@@ -38,8 +41,15 @@ trait GenericElems {
   def isCorrect(x: String, y: String): Boolean = ???
 
   def addRow(x: String, y: String): Unit = {
-    table.model.asInstanceOf[SpecificTableModel].addRow(Array(nextId.toString, x, y))
-    save(x,y)
+    Try {
+      save(x,y)
+      table.model.asInstanceOf[SpecificTableModel].addRow(Array((nextId -1).toString, x, y))
+    } match {
+      case Failure(e) =>
+        output.text = ""
+        output.append(e.toString)
+      case _ => output.text = ""
+    }
   }
 
   def deleteSelectedRows(): Unit = {

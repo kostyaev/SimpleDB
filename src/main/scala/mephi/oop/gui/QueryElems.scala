@@ -3,6 +3,7 @@ package mephi.oop.gui
 import mephi.oop.models.{WardTable, Ward, Doctor, DoctorTable}
 import mephi.oop.Queries
 import mephi.oop.gui.table.SpecificTableModel
+import scala.util.{Failure, Success, Try}
 
 
 trait QueryElems extends GenericElems {
@@ -15,7 +16,16 @@ trait QueryElems extends GenericElems {
 
   override def nextId = DoctorTable.nextId
 
-  def isCorrect(x: String): Boolean = !x.isEmpty
+  def isCorrect(x: String): Boolean = if (!x.isEmpty) Try(x.toInt) match {
+    case Success(_) =>
+      output.text = ""
+      true
+    case Failure(e) =>
+      output.text = ""
+      output.append(e.toString)
+      false
+  }
+  else false
 
   def search(id: String) = DoctorTable.get(id.toInt) match {
     case Some(doctor) => show(Queries.getMostPopulatedWard(doctor))

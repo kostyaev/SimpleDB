@@ -47,7 +47,7 @@ object Serializer extends App {
   import MyJsonProtocol._
   def save(file: File): Unit = {
     val out = new PrintWriter(file)
-    out.print(getDB.toJson)
+    out.print(getDB.toJson.prettyPrint)
     out.flush()
     out.close()
 

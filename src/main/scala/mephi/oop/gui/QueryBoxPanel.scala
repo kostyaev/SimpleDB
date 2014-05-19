@@ -8,6 +8,8 @@ class QueryBoxPanel(orientation: Orientation.Value) extends BoxPanel(orientation
   val text1: TextField = new TextField()
   val text2: TextField = new TextField()
 
+  override lazy val output:TextArea = new TextArea(6, 40) { editable = false }
+
   val searchButton: Button = new Button("Найти")
 
   lazy val input = new BoxPanel(Orientation.Horizontal) {
@@ -27,5 +29,5 @@ class QueryBoxPanel(orientation: Orientation.Value) extends BoxPanel(orientation
       case _ =>
     }
   }
-  contents ++= Seq(input, new ScrollPane(table))
+  contents ++= Seq(input, new ScrollPane(table), new ScrollPane(output))
 }

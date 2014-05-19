@@ -1,7 +1,6 @@
 package mephi.oop.gui
 
 import scala.swing._
-import mephi.oop.gui.table.SpecificTableModel
 import scala.swing.event.ButtonClicked
 
 class SpecificBoxPanel(orientation: Orientation.Value) extends BoxPanel(orientation) with GenericElems {
@@ -11,6 +10,8 @@ class SpecificBoxPanel(orientation: Orientation.Value) extends BoxPanel(orientat
 
   val addButton: Button = new Button("Добавить")
   val deleteButton: Button = new Button("Удалить")
+
+  override lazy val output:TextArea = new TextArea(6, 40) { editable = false }
 
   lazy val input = new BoxPanel(Orientation.Horizontal) {
     contents += new BoxPanel(Orientation.Vertical) {
@@ -38,6 +39,8 @@ class SpecificBoxPanel(orientation: Orientation.Value) extends BoxPanel(orientat
       case _ =>
     }
   }
-  contents ++= Seq(input, new ScrollPane(table))
+
+
+  contents ++= Seq(input, new ScrollPane(table), new ScrollPane(output))
 
 }

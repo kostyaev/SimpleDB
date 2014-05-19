@@ -2,7 +2,6 @@
 import mephi.oop.gui._
 import scala.swing._
 
-
 object runner extends App {
 
   val frame = new MainFrame with IOHelper {
@@ -58,39 +57,5 @@ object runner extends App {
     centerOnScreen()
   }
   frame.visible = true
-
-
-//  def getContent(input: BoxPanel, table: Table) = new BoxPanel(Orientation.Vertical) {
-//    val bottom = new BoxPanel(Orientation.Horizontal) {
-//      contents += new Button("Edit row")
-//    }
-//    val output = new TextArea(6, 40) { editable = false }
-//
-//    listenTo(table.selection)
-//
-//    reactions += {
-//      case TableRowsSelected(source, range, false) =>
-//        outputSelection(source, "Rows selected, changes: %s" format range)
-//      case TableColumnsSelected(source, range, false) =>
-//        outputSelection(source, "Columns selected, changes: %s" format range)
-//      case TableColumnHeaderSelected(source, column) =>
-//        outputSelection(source, "Column header %s selected" format column)
-//      case e => println("%s => %s" format(e.getClass.getSimpleName, e.toString))
-//
-//    }
-//
-//    contents += input
-//    contents += new ScrollPane(table)
-//    contents += bottom
-//    contents += new ScrollPane(output)
-//
-//    def outputSelection(table: Table, msg: String) {
-//      val rowId = table.selection.rows.leadIndex
-//      val colId = table.selection.columns.leadIndex
-//      val rows = table.selection.rows.mkString(", ")
-//      val cols = table.selection.columns.mkString(", ")
-//      output.append("%s\n  Lead: %s, %s; Rows: %s; Columns: %s\n" format (msg, rowId, colId, rows, cols))
-//    }
-//  }
 
 }
