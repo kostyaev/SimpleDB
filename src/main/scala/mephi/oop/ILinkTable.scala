@@ -1,9 +1,6 @@
 package mephi.oop
 
-import scala.collection.mutable.{MutableList}
-import scala.util.{Success, Failure, Try}
 import scala.collection.mutable
-import mephi.oop.models.DoctorPatients
 
 trait ILinkTable[T <: ILink] {
 
