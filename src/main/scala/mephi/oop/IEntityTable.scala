@@ -1,10 +1,6 @@
 package mephi.oop
 
 import scala.collection.mutable
-import argonaut.CodecJson
-import argonaut.Argonaut._
-import scalaz.Alpha.T
-import mephi.oop.models.Doctor
 
 /**
  * Интерфейс основной таблицы,

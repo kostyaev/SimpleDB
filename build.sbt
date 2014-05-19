@@ -14,7 +14,6 @@ libraryDependencies ++= {
     "org.scalatest" % "scalatest_2.11" % "2.1.4",
     "org.specs2" %% "specs2" % "2.3.11" % "test",
     "org.scala-lang" % "scala-swing" % "2.11.0-M7",
-    "io.argonaut" %% "argonaut" % "6.0.4",
     "io.spray" %%  "spray-json" % "1.2.6"
   )
 }

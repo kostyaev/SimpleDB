@@ -1,3 +1,5 @@
+package mephi.oop
+
 
 import mephi.oop.gui._
 import scala.swing._
@@ -53,7 +55,6 @@ object runner extends App {
     }
     contents = new SpecificBoxPanel(Orientation.Vertical) with DoctorElems
     title = "Таблица докторов"
-    //size = new Dimension(600,600)
     centerOnScreen()
   }
   frame.visible = true
