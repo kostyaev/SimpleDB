@@ -9,9 +9,12 @@ import mephi.oop.models.Doctor
 class EntityTableSuite extends FlatSpec with Matchers {
 
   "EntityTable" should "return correct id" in {
-    DoctorTable.clear()
+
+    PatientTable.clear()
     PatientTable add Patient("name1", 33) should be (1)
+    DoctorTable.clear()
     DoctorTable add Doctor("name1", 33) should be (1)
+    WardTable.clear()
     WardTable add Ward(10, 20) should be (1)
 
   }

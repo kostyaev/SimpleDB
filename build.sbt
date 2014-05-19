@@ -1,4 +1,5 @@
-name := "Scala app"
+
+name := "Simple DB"
 
 version := "0.1.0"
 
@@ -7,6 +8,8 @@ scalaVersion := "2.11.0"
 sbtVersion := "0.13.2"
 
 organization := "mephi"
+
+parallelExecution in ThisBuild := false
 
 libraryDependencies ++= {
   Seq(

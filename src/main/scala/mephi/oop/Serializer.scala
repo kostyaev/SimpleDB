@@ -7,7 +7,7 @@ import mephi.oop.models.Patient
 import mephi.oop.models.Doctor
 import java.io.{File, PrintWriter}
 
-object Serializer extends App {
+object Serializer {
 
   case class DataContainer(nextDoctorId: Int, doctorTable: Map[String, Doctor],
                            nextPatientId: Int, patientTable: Map[String, Patient],
@@ -46,7 +46,7 @@ object Serializer extends App {
 
   import MyJsonProtocol._
   def save(file: File): Unit = {
-    val out = new PrintWriter(file)
+    val out = new PrintWriter(file, "UTF-8")
     out.print(getDB.toJson.prettyPrint)
     out.flush()
     out.close()
@@ -54,7 +54,7 @@ object Serializer extends App {
   }
 
   def load(file: File): Unit = {
-    val source = scala.io.Source.fromFile(file)
+    val source = scala.io.Source.fromFile(file)(scala.io.Codec.UTF8)
     val content = source.mkString
     source.close()
     val data: DataContainer = JsonParser(content).convertTo[DataContainer]

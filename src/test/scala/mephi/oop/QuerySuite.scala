@@ -10,6 +10,14 @@ import mephi.oop.models.WardPatients
 
 class QuerySuite extends FlatSpec with Matchers {
   "Query getMostPopulatedWard" should "return the most populated ward with the patients of some particular doctor" in {
+
+    DoctorTable.clear()
+    WardTable.clear()
+    PatientTable.clear()
+
+    DoctorPatientsTable.clear()
+    WardPatientsTable.clear()
+
     val id1 = DoctorTable.add(Doctor("House", 54))
     val id2 = DoctorTable.add(Doctor("Dorian", 28))
 
@@ -49,7 +57,6 @@ class QuerySuite extends FlatSpec with Matchers {
     WardPatientsTable.addLink(WardPatients(wId1, pId6))
     WardPatientsTable.addLink(WardPatients(wId3, pId7))
     WardPatientsTable.addLink(WardPatients(wId3, pId8))
-
 
     Queries.getMostPopulatedWard(Doctor("House", 54)) should be (Some(Ward(1,2)))
     Queries.getMostPopulatedWard(Doctor("Dorian", 28)) should be (Some(Ward(3,2)))
